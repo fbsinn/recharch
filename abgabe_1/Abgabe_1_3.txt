@@ -1,0 +1,83 @@
+=======================================================================
+Übung 1: OpenRISC Entwicklungsplattform
+=======================================================================
+
+1.1: Verbindungsstrukturen: Bus- und Punkt-zu-Punkt Verbindungen
+=======================================================================
+a) PCI: Bus
+   PCIe: Punkt-zu-Punkt
+   QPI: Punkt-zu-Punkt
+   ISA: Bus
+   
+b) Datenbus: Höhere Bandbreite
+   Adressbus: Mehr Speicher adressierbar
+   Steuerbus: Komplexerer Befehlssatz
+   
+c) Bus ist geteiltes Medium, mehrere Geräte 'hängen' an den selben 
+   Leiterbahnen. Damit es nicht zu Kollisionen kommt, ist es nötig
+   abzustimmen welches Gerät wann senden darf. Diesen Vorgang nennt man
+   Arbitrierung.
+   
+   Punkt-zu-Punkt Verbindungen sind "exklusiv" zwischen zwei Geräten.
+   Eine Abstimmung ist somit nicht notwendig.
+   
+   // F: Sind die Lanes von Punkt-zu-Punkt Verbindungen immer bidirektional
+   // ausgelegt, so dass zwei gleichzeitige Anfragen der gegenüberliegenden
+   // Geräte sich nicht stören können? Oder regelt dies eine der Schichten?
+   // (Link-Layer)
+   
+1.2: Vergleich der OpenRISC Entwicklungsplattform mit Desktop-PC
+=======================================================================
+X86/X86_64							OpenRISC
+-----------------------------------------------------------------------
+Nicht Offen							Offen
+
+Little Endian						Big Endian
+
+CISC								RISC
+
+Variable Befehlslänge				Feste Befehlslänge
+
+1.3: Überblick über die Architektur des OpenRISC SoC
+=======================================================================
+Ähnlich: Feste Instruktionslänge, 
+		 RISC-Befehlssatz, 
+		 Big-Endian,
+		 64-bit (OpenRISC gibt es zusätzlich als 32-bit)
+
+Unterschiedlich: MMIX hat 256 general purpose Register, 
+				 OpenRISC hat 16 oder 32
+				 
+			 
+
+
+
+
+=======================================================================
+Übung 2: Architektur und Leistungsbewertung
+=======================================================================
+
+2.1. PCI Express
+=======================================================================
+a) 	Schicht			Aufgabe						Übertragungseinheit
+	----------------------------------------------------------------
+	Physical		phy. Übertragung			Bits
+	
+	Link			zuverlässige Übertragung,	DLLPs
+					Datenflusskontrolle
+					
+	Transaction		Paketorientierter			TLPs
+					Datenaustausch
+					
+b)	Zweiteilung der Datenabfrage in Request- und Completion-Packages.
+	Um zwischen Anfrage und Fertigstellung des Ergebnisses die Verbindung
+	für andere Daten nutzen zu können. Somit gesteigerte Effizienz.
+	
+
+2.2 Von-Neumann-Architektur und Harvard-Architektur
+====================================================
+a)	Trifft bei der Von-Neumann Architektur voll zu. Hier werden 
+	Programm- und Nutzedaten gleich behandelt und im gleichen
+	Speicherbereich	gespeichert.
+	
+	Bei der Harvard-Architektur hingegen werden 
