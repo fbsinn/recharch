@@ -26,31 +26,29 @@ c) Bus ist geteiltes Medium, mehrere Geräte 'hängen' an den selben
    // Geräte sich nicht stören können? Oder regelt dies eine der Schichten?
    // (Link-Layer)
    
+   
 1.2: Vergleich der OpenRISC Entwicklungsplattform mit Desktop-PC
 =======================================================================
-X86/X86_64							OpenRISC
+X86/X86_64                            OpenRISC
 -----------------------------------------------------------------------
-Nicht Offen							Offen
+Nicht Offen                           Offen
 
-Little Endian						Big Endian
+Little Endian                         Big Endian
 
-CISC								RISC
+CISC                                  RISC
 
-Variable Befehlslänge				Feste Befehlslänge
+Variable Befehlslänge                 Feste Befehlslänge
+
 
 1.3: Überblick über die Architektur des OpenRISC SoC
 =======================================================================
 Ähnlich: Feste Instruktionslänge, 
-		 RISC-Befehlssatz, 
-		 Big-Endian,
-		 64-bit (OpenRISC gibt es zusätzlich als 32-bit)
+         RISC-Befehlssatz, 
+         Big-Endian,
+         64-bit (OpenRISC gibt es zusätzlich als 32-bit)
 
 Unterschiedlich: MMIX hat 256 general purpose Register, 
-				 OpenRISC hat 16 oder 32
-				 
-			 
-
-
+                 OpenRISC hat 16 oder 32
 
 
 =======================================================================
@@ -59,25 +57,62 @@ Unterschiedlich: MMIX hat 256 general purpose Register,
 
 2.1. PCI Express
 =======================================================================
-a) 	Schicht			Aufgabe						Übertragungseinheit
-	----------------------------------------------------------------
-	Physical		phy. Übertragung			Bits
-	
-	Link			zuverlässige Übertragung,	DLLPs
-					Datenflusskontrolle
-					
-	Transaction		Paketorientierter			TLPs
-					Datenaustausch
-					
-b)	Zweiteilung der Datenabfrage in Request- und Completion-Packages.
-	Um zwischen Anfrage und Fertigstellung des Ergebnisses die Verbindung
-	für andere Daten nutzen zu können. Somit gesteigerte Effizienz.
-	
-
+a)     Schicht            Aufgabe                 Übertragungseinheit
+    ----------------------------------------------------------------
+       Physical        phy. Übertragung               Bits
+    
+       Link            zuverlässige Übertragung,      DLLPs
+                       Datenflusskontrolle
+                    
+       Transaction     Paketorientierter              TLPs
+                       Datenaustausch
+                    
+b) Zweiteilung der Datenabfrage in Request- und Completion-Packages.
+   Um zwischen Anfrage und Fertigstellung des Ergebnisses die Verbindung
+   für andere Daten nutzen zu können. Somit gesteigerte Effizienz.
+    
+    
 2.2 Von-Neumann-Architektur und Harvard-Architektur
-====================================================
-a)	Trifft bei der Von-Neumann Architektur voll zu. Hier werden 
-	Programm- und Nutzedaten gleich behandelt und im gleichen
-	Speicherbereich	gespeichert.
-	
-	Bei der Harvard-Architektur hingegen werden 
+=======================================================================
+a) Trifft bei der Von-Neumann Architektur voll zu. Hier werden 
+   Programm- und Nutzdaten gleich behandelt und im gleichen
+   Speicherbereich gespeichert.
+    
+   Bei der Harvard-Architektur hingegen findet eine Trennung von
+   Programm- und Nutzdaten statt. Sie werden also in unterschiedlichen
+   Adressbereichen (logisch) und unterschiedlichen Speicherbauteilen
+   (physisch) gehalten und nicht "gemischt".
+   
+   Bei der modifizierten Harvard-Architektur findet eine weniger strikte
+   Trennung von Programm- und Datenspeicher statt. Hier werden Programm-
+   und Nutzdaten im Hauptspeicher meißt nur logisch getrennt (Aufteilung des 
+   Programmspeichers in Segmente). L1-Caches hingegen sind meißt auch
+   physisch getrennt ausgelegt.
+   
+b) SISD - Single Instruction, Single Data. Beschreibt eine 
+   Computerarchitektur bei welcher eine (Einkern)CPU einen einzelnen
+   Instruktionsstrom abarbeitet und dabei auf einem einzelnen Speicher
+   arbeitet. Leitwerk -> Rechenwerk -> Speicher
+   
+c) Durch die Trennung von Programm- und Nutzdaten ergibt sich bei der
+   Harvard-Architektur der Vorteil, dass Programm- und Nutzdaten
+   gleichzeitig gelesen bzw. geschrieben werden können.
+   
+   Die physikalische Trennung sorgt außerdem für einen einfacher zu
+   realisierenden Speicherschutz (da der Programmspeicher einfach
+   "read-only" gesetzt werden kann und damit Speicherüberläufe den
+   Programmspeicher nicht verändern können).
+   
+   Gegen die Harvard-Architektur spricht die Notwendigkeit die physikalischen
+   Speicher mehrfach zu verbauen. Dadurch entsteht eine höhere Komplexität
+   auf Hardware-Ebene. 
+   
+
+d)
+
+
+2.3 Auswirkung von Architekturänderungen
+=======================================================================
+a)
+
+b)
