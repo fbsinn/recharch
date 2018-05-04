@@ -1,0 +1,76 @@
+Übungsblatt 4
+=======================================================================
+
+Aufgabe 4.1: Stack-Maschine
+-----------------------------------------------------------------------
+a)  PUSH 5
+    PUSH 2
+    ADD
+    PUSH 40
+    DIV
+    
+b)  PUSH 11
+    PUSH 5
+    PUSH 2
+    ADD
+    PUSH 40
+    DIV
+    ADD
+    
+Aufgabe 4.2: Bedingte Befehle
+-----------------------------------------------------------------------
+max     IS      $0
+        LOC     #100
+Main    SET     $1,19
+        SET     $2,42
+        SET     $3,11
+        SUB     $4,$1,$2
+        CSNN    max,$4,$1
+        CSNP    max,$4,$2
+        SUB     $4,max,$3
+        CSNP    max,$4,$3
+        
+Aufgabe 4.3: Endianness
+-----------------------------------------------------------------------
+a) 
+Big Endian:     180 AF
+                181 FE
+                182 08
+                183 15
+                
+Little Endian:  180 15
+                181 08
+                182 FE
+                183 AF
+                
+b)  a. Intel 80x86 - little endian
+    b. MMIX - big endian
+    c. ARM - kann beides, Standardmodus ist little endian
+    d. OpenRISC - big endian
+    e. JPEG - big endian
+    f. GIF - little endian
+    g. IP - big endian
+    
+c)  Die Bytereihenfolge muss vertauscht werden. Dies kann durch
+    geschickte Nutzung logischer Operationen geschehen. Zum Beispiel
+    für ein (32bit) Integer:
+    
+        uint32_t number = 1337;
+        uint32_t b0, b1, b2, b3;
+        uint32_t result;
+        b0 = (num & 0x000000ff) << 24;
+        b1 = (num & 0x0000ff00) << 8;
+        b2 = (num & 0x00ff0000) >> 8;
+        b3 = (num & 0xff000000) >> 24;
+        res = b0 | b1 | b2 | b3;
+        
+    Alternativ kann die C-Funktion uint_32_t ntohl(uint32_t netlong)
+    genutzt werden. Diese ist für die Übersetzung von (Big-endian)
+    Netzwerk-Byte-Order zu (Little-Endian) Host-Byte-Order gedacht
+    und teil des POSIX-Standards. Natürlich sollte hiervor geprüft
+    werden ob Network- und Host-Byte-Order den gewünschten Werten
+    entsprechen.
+    
+    
+        
+                
